@@ -68,20 +68,37 @@
 
     <script>
         function connectWallet() {
-            // Проверяем, что пользователь использует Telegram Web App
+            // Проверяем, что Telegram Web App доступен
             if (window.Telegram && window.Telegram.WebApp) {
                 // Пример данных
                 const tonAmount = 0.5; // Сумма в TONS
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
 
-                // Формирование deeplink для подключения кошелька
-                const deeplink = `tg://resolve?domain=connect_wallet_bot&start=${encodeURIComponent(`connect_wallet:${tonAmount}:${userUID}`)}`;
+                // Показать пользователю интерфейс выбора кошелька
+                Telegram.WebApp.showAlert("Connecting wallet...");
 
-                // Открываем Telegram Web App с указанным deeplink
+                // Пример deeplink для открытия выбора кошелька
+                const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
+                
+                // Открываем deeplink
                 window.location.href = deeplink;
 
+                // Таймер для проверки открытия приложения
+                setTimeout(() => {
+                    // Ссылки для установки приложения
+                    const playStoreURL = 'https://play.google.com/store/apps/details?id=com.yourapp'; // Ссылка на установку приложения в Google Play
+                    const appStoreURL = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Замените YOUR_APP_ID на идентификатор вашего приложения в App Store
+
+                    if (/android/i.test(navigator.userAgent)) {
+                        window.location.href = playStoreURL;
+                    } else if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                        window.location.href = appStoreURL;
+                    } else {
+                        alert('Please install the appropriate app from your app store.');
+                    }
+                }, 2000); // Задержка 2 секунды
             } else {
-                alert("Please use Telegram Web App to connect your wallet.");
+                alert("This feature is available only in Telegram Web App.");
             }
         }
     </script>
