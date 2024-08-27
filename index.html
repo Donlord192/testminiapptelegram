@@ -67,17 +67,8 @@
     </div>
 
     <script>
-        function checkTelegramWebApp() {
-            // Проверка наличия Telegram Web App API
-            if (window.Telegram && window.Telegram.WebApp) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
         function connectWallet() {
-            if (checkTelegramWebApp()) {
+            if (window.Telegram && window.Telegram.WebApp) {
                 // Пример данных
                 const tonAmount = 0.5; // Сумма в TONS
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
@@ -85,11 +76,17 @@
                 // Формируем deeplink
                 const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
 
-                // Открываем deeplink
+                // Открываем deeplink в новом окне
                 window.location.href = deeplink;
 
-                // Показываем уведомление
+                // Показ уведомления
                 Telegram.WebApp.showAlert("Opening your wallet...");
+
+                // Периодически проверяем, открылось ли приложение
+                setTimeout(() => {
+                    // Если приложение не открылось, показать сообщение пользователю
+                    alert("Please ensure the app is installed or try manually opening the link.");
+                }, 5000); // Задержка 5 секунд
             } else {
                 alert("This feature is available only in Telegram Web App.");
             }
