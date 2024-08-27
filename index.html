@@ -76,17 +76,11 @@
                 // Формируем deeplink
                 const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
 
-                // Открываем deeplink в новом окне
-                window.location.href = deeplink;
-
                 // Показ уведомления
                 Telegram.WebApp.showAlert("Opening your wallet...");
 
-                // Периодически проверяем, открылось ли приложение
-                setTimeout(() => {
-                    // Если приложение не открылось, показать сообщение пользователю
-                    alert("Please ensure the app is installed or try manually opening the link.");
-                }, 5000); // Задержка 5 секунд
+                // Открываем deeplink
+                window.location.href = deeplink;
             } else {
                 alert("This feature is available only in Telegram Web App.");
             }
