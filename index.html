@@ -77,8 +77,13 @@
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
                 const deeplink = `https://tonkeeper.app/transfer/${userUID}?amount=${tonAmount * 1e9}`;
 
-                console.log("Opening deeplink:", deeplink);
-                window.open(deeplink, "_blank");
+                console.log("Attempting to open deeplink:", deeplink);
+
+                // Попробуйте использовать Telegram.WebApp.openLink
+                Telegram.WebApp.openLink(deeplink);
+
+                // Если openLink не работает, используйте это
+                // window.location.href = deeplink;
             } else {
                 console.log("Telegram Web App not detected");
                 alert("Please use Telegram Web App to connect your wallet.");
