@@ -68,18 +68,19 @@
 
     <script>
         function connectWallet() {
-            // Проверяем, что пользователь использует Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
+                console.log("Telegram Web App detected");
+
                 Telegram.WebApp.showAlert("Connecting wallet...");
 
-                // Deeplink для открытия кошелька Tonkeeper с запросом транзакции
                 const tonAmount = 0.5;
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-                const deeplink = `https://tonkeeper.app/transfer/${userUID}?amount=${tonAmount * 1e9}`; // Конвертируем тонны в нанотонны
+                const deeplink = `https://tonkeeper.app/transfer/${userUID}?amount=${tonAmount * 1e9}`;
 
-                // Открываем ссылку для выполнения транзакции
+                console.log("Opening deeplink:", deeplink);
                 window.open(deeplink, "_blank");
             } else {
+                console.log("Telegram Web App not detected");
                 alert("Please use Telegram Web App to connect your wallet.");
             }
         }
