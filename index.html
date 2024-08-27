@@ -68,13 +68,21 @@
 
     <script>
         function connectWallet() {
-            // Deeplink для открытия кошелька Tonkeeper с запросом транзакции
             const tonAmount = 0.5;
             const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-            const deeplink = `https://tonkeeper.app/transfer/${userUID}?amount=${tonAmount * 1e9}`; // Конвертируем тонны в нанотонны
+            const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
 
-            // Открываем ссылку для выполнения транзакции
-            window.open(deeplink, "_blank");
+            // Попытка открыть приложение
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = deeplink;
+            document.body.appendChild(iframe);
+
+            // Таймер для проверки, открылось ли приложение
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                alert('Please install or open the Tonkeeper app to complete the transaction.');
+            }, 2000); // Задержка 2 секунды
         }
     </script>
 </body>
