@@ -68,20 +68,27 @@
 
     <script>
         function connectWallet() {
-            // Проверка, что это Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
                 // Пример данных
                 const tonAmount = 0.5; // Сумма в TONS
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
 
-                // Формирование deeplink для открытия кошелька
+                // Формируем deeplink
                 const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
 
-                // Открываем deeplink
-                window.location.href = deeplink;
+                // Функция для открытия deeplink
+                function openDeeplink() {
+                    window.location.href = deeplink;
+                }
 
-                // Обработка ответа от пользователя
-                Telegram.WebApp.showAlert("Processing your request...");
+                // Открываем deeplink
+                openDeeplink();
+
+                // Таймер для проверки, если deeplink не открылся
+                setTimeout(() => {
+                    // Если приложение не открылось, показать сообщение пользователю
+                    alert("Please make sure the app is installed or try opening the link manually.");
+                }, 3000); // Задержка 3 секунды
             } else {
                 alert("This feature is available only in Telegram Web App.");
             }
