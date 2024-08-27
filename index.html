@@ -72,17 +72,14 @@
             const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
             const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
 
-            // Попытка открыть приложение
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = deeplink;
-            document.body.appendChild(iframe);
+            // Открытие deeplink
+            window.location.href = deeplink;
 
-            // Таймер для проверки, открылось ли приложение
+            // Для проверки, что приложение открывается
+            // Добавляем небольшой таймер, чтобы отследить, открывается ли приложение
             setTimeout(() => {
-                document.body.removeChild(iframe);
-                alert('Please install or open the Tonkeeper app to complete the transaction.');
-            }, 2000); // Задержка 2 секунды
+                window.location.href = 'https://play.google.com/store/apps/details?id=com.tonkeeper'; // Ссылка на установку приложения в Google Play
+            }, 2000); // Задержка в 2 секунды
         }
     </script>
 </body>
