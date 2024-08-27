@@ -67,22 +67,24 @@
     </div>
 
     <script>
-        function connectWallet() {
+        function openConnectWallet() {
+            // Подготовка данных для подключения кошелька
+            const tonAmount = 0.5; // Сумма в TONS
+            const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
+
+            // Формируем URL для подключения кошелька
+            const connectWalletURL = `https://t.me/your_bot?start=connect_wallet&amount=${tonAmount}&user_id=${userUID}`;
+
+            // Проверка наличия Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
-                // Подготовка данных для подключения кошелька
-                const tonAmount = 0.5; // Сумма в TONS
-                const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
-
-                // Формируем deeplink для подключения кошелька
-                const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
-
-                // Открываем deeplink через Telegram Web App
-                window.Telegram.WebApp.openLink(deeplink);
+                // Открываем URL для подключения кошелька
+                window.Telegram.WebApp.openLink(connectWalletURL);
 
                 // Показываем уведомление пользователю
-                Telegram.WebApp.showAlert("Opening your wallet...");
+                Telegram.WebApp.showAlert("Opening wallet connection...");
             } else {
-                alert("This feature is only available in Telegram Web App.");
+                // Если не в Telegram Web App, просто открываем URL
+                window.location.href = connectWalletURL;
             }
         }
 
