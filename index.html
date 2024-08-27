@@ -69,20 +69,20 @@
     <script>
         function connectWallet() {
             if (window.Telegram && window.Telegram.WebApp) {
-                // Пример данных
+                // Подготовка данных для подключения кошелька
                 const tonAmount = 0.5; // Сумма в TONS
                 const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
 
-                // Формируем deeplink
+                // Формируем deeplink для подключения кошелька
                 const deeplink = `tonkeeper://transfer?amount=${tonAmount * 1e9}&user_id=${userUID}`;
 
-                // Показ уведомления
-                Telegram.WebApp.showAlert("Opening your wallet...");
+                // Открываем deeplink через Telegram Web App
+                window.Telegram.WebApp.openLink(deeplink);
 
-                // Открываем deeplink
-                window.location.href = deeplink;
+                // Показываем уведомление пользователю
+                Telegram.WebApp.showAlert("Opening your wallet...");
             } else {
-                alert("This feature is available only in Telegram Web App.");
+                alert("This feature is only available in Telegram Web App.");
             }
         }
 
