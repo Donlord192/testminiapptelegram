@@ -72,29 +72,34 @@
             const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
             const deeplink = `tonkeeper://transfer/${userUID}?amount=${tonAmount * 1e9}`; // Deeplink для открытия приложения
 
-            // Открытие deeplink
-            window.location.href = deeplink;
+            // Проверяем, что пользователь использует Telegram Web App
+            if (window.Telegram && window.Telegram.WebApp) {
+                // Открытие deeplink для приложения
+                window.location.href = deeplink;
 
-            // Проверяем, установлен ли таймер, чтобы перенаправить на установку
-            setTimeout(() => {
-                // Проверяем пользовательское устройство
-                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-                
-                // Ссылки для установки приложения
-                const playStoreURL = 'https://play.google.com/store/apps/details?id=com.tonkeeper'; // Ссылка на установку приложения в Google Play
-                const appStoreURL = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Замените YOUR_APP_ID на идентификатор вашего приложения в App Store
+                // Таймер для проверки открытия приложения
+                setTimeout(() => {
+                    // Проверяем пользовательское устройство
+                    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                    
+                    // Ссылки для установки приложения
+                    const playStoreURL = 'https://play.google.com/store/apps/details?id=com.tonkeeper'; // Ссылка на установку приложения в Google Play
+                    const appStoreURL = 'https://apps.apple.com/app/idYOUR_APP_ID'; // Замените YOUR_APP_ID на идентификатор вашего приложения в App Store
 
-                if (/android/i.test(userAgent)) {
-                    // Перенаправляем на Google Play, если устройство Android
-                    window.location.href = playStoreURL;
-                } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-                    // Перенаправляем на App Store, если устройство iOS
-                    window.location.href = appStoreURL;
-                } else {
-                    // Для остальных случаев
-                    alert('Please install the appropriate app from your app store.');
-                }
-            }, 2000); // Задержка в 2 секунды
+                    if (/android/i.test(userAgent)) {
+                        // Перенаправляем на Google Play, если устройство Android
+                        window.location.href = playStoreURL;
+                    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                        // Перенаправляем на App Store, если устройство iOS
+                        window.location.href = appStoreURL;
+                    } else {
+                        // Для остальных случаев
+                        alert('Please install the appropriate app from your app store.');
+                    }
+                }, 2000); // Задержка 2 секунды
+            } else {
+                alert("Please use Telegram Web App to connect your wallet.");
+            }
         }
     </script>
 </body>
