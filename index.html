@@ -17,14 +17,6 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Стили для изображения */
-        .image {
-            width: 75%; /* Занимает всю ширину контейнера */
-            height: auto;
-            margin-bottom: 15px;
-            border-radius: 10px;
-        }
-
         .container {
             width: 90%;
             max-width: 400px;
@@ -51,11 +43,41 @@
             background-color: #cacaca;
         }
 
-        /* Адаптивные стили */
-        @media (max-width: 480px) {
-            .container {
-                padding: 15px; /* Уменьшаем отступы на меньших экранах */
-            }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            color: black;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -63,35 +85,45 @@
     <div class="container">
         <img src="./dogs.jpg" alt="Join DOGS" class="image">
         <h2>Connect your wallet</h2>
-        <button class="button-main" onclick="openConnectWallet()">Connect Wallet and Claim</button>
+        <button class="button-main" onclick="openModal()">Connect Wallet and Claim</button>
+    </div>
+
+    <!-- Модальное окно -->
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Connect Wallet</h2>
+            <p>Choose your wallet to connect:</p>
+            <button onclick="connectWallet('Tonkeeper')">Tonkeeper</button>
+            <button onclick="connectWallet('MyTonWallet')">MyTonWallet</button>
+            <button onclick="connectWallet('Tonhub')">Tonhub</button>
+            <button onclick="connectWallet('DeWallet')">DeWallet</button>
+        </div>
     </div>
 
     <script>
-        function openConnectWallet() {
-            // Подготовка данных для подключения кошелька
-            const tonAmount = 0.5; // Сумма в TONS
-            const userUID = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM"; // UID
+        function openModal() {
+            document.getElementById('walletModal').style.display = 'block';
+        }
 
-            // Формируем URL для подключения кошелька
-            const connectWalletURL = `https://t.me/dogehause_bot?start=connect_wallet&amount=${tonAmount}&user_id=${userUID}`;
+        function closeModal() {
+            document.getElementById('walletModal').style.display = 'none';
+        }
 
-            // Проверка наличия Telegram Web App
-            if (window.Telegram && window.Telegram.WebApp) {
-                // Открываем URL для подключения кошелька
-                window.Telegram.WebApp.openLink(connectWalletURL);
+        function connectWallet(walletName) {
+            // Здесь можно добавить логику для подключения выбранного кошелька
+            alert(`Connecting ${walletName} wallet...`);
+            // После подключения можно закрыть модальное окно
+            closeModal();
+        }
 
-                // Показываем уведомление пользователю
-                Telegram.WebApp.showAlert("Opening wallet connection...");
-            } else {
-                // Если не в Telegram Web App, просто открываем URL
-                window.location.href = connectWalletURL;
+        // Закрытие модального окна при клике вне его содержимого
+        window.onclick = function(event) {
+            const modal = document.getElementById('walletModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
             }
-        }
-
-        // Инициализация Telegram Web App
-        if (window.Telegram && window.Telegram.WebApp) {
-            Telegram.WebApp.ready();
-        }
+        };
     </script>
 </body>
 </html>
