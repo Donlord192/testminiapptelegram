@@ -27,6 +27,13 @@
             text-align: center;
         }
 
+        .image {
+            width: 75%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
         .button-main {
             padding: 12px 20px;
             background-color: #ffffff;
@@ -43,42 +50,103 @@
             background-color: #cacaca;
         }
 
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 10px;
+            }
+
+            .wallet-options img {
+                width: 40px;
+                height: 40px;
+            }
+
+            .wallet-button {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
         .modal {
             display: none;
             position: fixed;
             z-index: 1;
             left: 0;
-            top: 0;
+            bottom: -100%;
             width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            height: 50%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            animation: slide-up 0.5s forwards;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
         }
 
         .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
             padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 10px;
-            color: black;
+            text-align: center;
+            height: 100%;
+            position: relative;
         }
 
         .close {
             color: #aaa;
-            float: right;
+            position: absolute;
+            top: 10px;
+            right: 10px;
             font-size: 28px;
             font-weight: bold;
         }
 
         .close:hover,
         .close:focus {
-            color: black;
+            color: white;
             text-decoration: none;
             cursor: pointer;
         }
+
+        .wallet-button {
+            background-color: #00A8FF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .wallet-options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .wallet-options img {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .qr-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+        }
+
+        @keyframes slide-up {
+            from {bottom: -100%;}
+            to {bottom: 0;}
+        }
+
     </style>
 </head>
 <body>
@@ -91,39 +159,40 @@
     <!-- Модальное окно -->
     <div id="walletModal" class="modal">
         <div class="modal-content">
+            <span class="qr-button" onclick="openQRCode()">&#128247;</span>
             <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Connect Wallet</h2>
-            <p>Choose your wallet to connect:</p>
-            <button onclick="connectWallet('Tonkeeper')">Tonkeeper</button>
-            <button onclick="connectWallet('MyTonWallet')">MyTonWallet</button>
-            <button onclick="connectWallet('Tonhub')">Tonhub</button>
-            <button onclick="connectWallet('DeWallet')">DeWallet</button>
+            <h2>Connect your wallet</h2>
+            <button class="wallet-button" onclick="openTelegramWallet()">Open Wallet in Telegram</button>
+            <div class="wallet-options">
+                <img src="tonkeeper.png" alt="Tonkeeper" onclick="openWallet('https://tonkeeper.com')">
+                <img src="mytonwallet.png" alt="MyTonWallet" onclick="openWallet('https://mytonwallet.org')">
+                <img src="tonhub.png" alt="Tonhub" onclick="openWallet('https://tonhub.com')">
+                <img src="dewallet.png" alt="DeWallet" onclick="openWallet('https://dewallet.com')">
+                <img src="viewall.png" alt="View all wallets" onclick="openWallet('https://viewallwallets.com')">
+            </div>
         </div>
     </div>
 
     <script>
         function openModal() {
-            document.getElementById('walletModal').style.display = 'block';
+            document.getElementById("walletModal").style.display = "block";
         }
 
         function closeModal() {
-            document.getElementById('walletModal').style.display = 'none';
+            document.getElementById("walletModal").style.display = "none";
         }
 
-        function connectWallet(walletName) {
-            // Здесь можно добавить логику для подключения выбранного кошелька
-            alert(`Connecting ${walletName} wallet...`);
-            // После подключения можно закрыть модальное окно
-            closeModal();
+        function openTelegramWallet() {
+            window.open('https://telegram.org', '_blank');
         }
 
-        // Закрытие модального окна при клике вне его содержимого
-        window.onclick = function(event) {
-            const modal = document.getElementById('walletModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        };
+        function openWallet(url) {
+            window.open(url, '_blank');
+        }
+
+        function openQRCode() {
+            alert('QR Code functionality is not yet implemented.');
+        }
     </script>
 </body>
 </html>
