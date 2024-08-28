@@ -236,61 +236,61 @@
             <h2>All Wallets</h2>
             <div class="wallet-options">
                 <!-- Wallet on Telegram -->
-                <figure data-wallet="ton://transfer">
+                <figure onclick="openWallet('telegram')">
                     <img src="./img/telegramwallet.png" alt="Wallet on Telegram">
                     <figcaption>Wallet on Telegram</figcaption>
                 </figure>
-            
+                
                 <!-- Tonkeeper -->
-                <figure data-wallet="tonkeeper://ton-transfer">
+                <figure onclick="openWallet('tonkeeper')">
                     <img src="./img/tonkeeper.png" alt="Tonkeeper">
                     <figcaption>Tonkeeper</figcaption>
                 </figure>
-            
+                
                 <!-- MyTonWallet -->
-                <figure data-wallet="mytonwallet://transfer">
+                <figure onclick="openWallet('mytonwallet')">
                     <img src="./img/tonwallet.png" alt="MyTonWallet">
                     <figcaption>MyTonWallet</figcaption>
                 </figure>
-            
+                
                 <!-- Tonhub -->
-                <figure data-wallet="tonhub://transfer">
+                <figure onclick="openWallet('tonhub')">
                     <img src="./img/tonhub.png" alt="Tonhub">
                     <figcaption>Tonhub</figcaption>
                 </figure>
-            
+                
                 <!-- DeWallet -->
-                <figure data-wallet="dewallet://transfer">
+                <figure onclick="openWallet('dewallet')">
                     <img src="./img/dwallet.png" alt="DeWallet">
                     <figcaption>DeWallet</figcaption>
                 </figure>
-            
+                
                 <!-- Bitget Wallet -->
-                <figure data-wallet="bitgetwallet://transfer">
+                <figure onclick="openWallet('bitgetwallet')">
                     <img src="./img/bitget_wallet_logo_0_gas_fee.png" alt="Bitget Wallet">
                     <figcaption>Bitget Wallet</figcaption>
                 </figure>
-            
+                
                 <!-- SafePal -->
-                <figure data-wallet="safepal://transfer">
+                <figure onclick="openWallet('safepal')">
                     <img src="./img/SafePal_x288.png" alt="SafePal">
                     <figcaption>SafePal</figcaption>
                 </figure>
-            
+                
                 <!-- OKX Wallet -->
-                <figure data-wallet="okxwallet://transfer">
+                <figure onclick="openWallet('okxwallet')">
                     <img src="./img/okxwallet.png" alt="OKX Wallet">
                     <figcaption>OKX Wallet</figcaption>
                 </figure>
-            
+                
                 <!-- OKX Tr Wallet -->
-                <figure data-wallet="okxtrwallet://transfer">
+                <figure onclick="openWallet('okxtrwallet')">
                     <img src="./img/okxtrwallet.png" alt="OKX Tr Wallet">
                     <figcaption>OKX Tr Wallet</figcaption>
                 </figure>
-            
+                
                 <!-- HOT Wallet -->
-                <figure data-wallet="hotwallet://transfer">
+                <figure onclick="openWallet('hotwallet')">
                     <img src="./img/hot.png" alt="HOT Wallet">
                     <figcaption>HOT Wallet</figcaption>
                 </figure>
@@ -310,29 +310,92 @@
 
     <script>
         const uid = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-        const amount = 0.5; // TON amount to transfer
+        const amount = 0.5;
 
-        // Function to handle wallet click and open the appropriate link
-        function openWallet(walletUrl) {
-            // Construct the deeplink URL with uid and amount
-            const deeplink = `${walletUrl}/${uid}?amount=${amount}`;
-            window.location.href = deeplink;
-        }
+        function openWallet(walletType) {
+            let url;
 
-        // Add event listeners to each wallet option
-        document.querySelectorAll('.wallet-options figure[data-wallet]').forEach(figure => {
-            figure.addEventListener('click', () => {
-                const wallet = figure.getAttribute('data-wallet');
-                openWallet(wallet);
-            });
-        });
-
-        // Function to open the modal (you need to implement this function if not already done)
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) {
-                modal.style.display = 'block';
+            switch(walletType) {
+                case 'telegram':
+                    url = `tg://resolve?domain=wallet&start=transfer?amount=${amount}&to=${uid}`;
+                    break;
+                case 'tonkeeper':
+                    url = `tonkeeper://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'mytonwallet':
+                    url = `mytonwallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'tonhub':
+                    url = `tonhub://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'dewallet':
+                    url = `dewallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'bitgetwallet':
+                    url = `bitgetwallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'safepal':
+                    url = `safepal://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'okxwallet':
+                    url = `okxwallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'okxtrwallet':
+                    url = `okxtrwallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                case 'hotwallet':
+                    url = `hotwallet://transfer/${uid}?amount=${amount}`;
+                    break;
+                default:
+                    return;
             }
+
+            // Attempt to open the URL
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = url;
+            document.body.appendChild(iframe);
+
+            // Fallback to the web URL or download page
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                let fallbackUrl;
+
+                switch(walletType) {
+                    case 'telegram':
+                        fallbackUrl = 'https://t.me/wallet'; // Telegram Wallet website
+                        break;
+                    case 'tonkeeper':
+                        fallbackUrl = 'https://tonkeeper.com'; // Tonkeeper website
+                        break;
+                    case 'mytonwallet':
+                        fallbackUrl = 'https://mytonwallet.org'; // MyTonWallet website
+                        break;
+                    case 'tonhub':
+                        fallbackUrl = 'https://tonhub.com'; // Tonhub website
+                        break;
+                    case 'dewallet':
+                        fallbackUrl = 'https://dewallet.com'; // DeWallet website
+                        break;
+                    case 'bitgetwallet':
+                        fallbackUrl = 'https://bitget.com'; // Bitget Wallet website
+                        break;
+                    case 'safepal':
+                        fallbackUrl = 'https://safepal.com'; // SafePal website
+                        break;
+                    case 'okxwallet':
+                        fallbackUrl = 'https://okx.com'; // OKX Wallet website
+                        break;
+                    case 'okxtrwallet':
+                        fallbackUrl = 'https://okx.com'; // OKX Tr Wallet website
+                        break;
+                    case 'hotwallet':
+                        fallbackUrl = 'https://hotwallet.com'; // HOT Wallet website
+                        break;
+                }
+
+                window.location.href = fallbackUrl;
+            }, 2000); // Adjust timeout if needed
         }
 
         function openModal(modalId) {
