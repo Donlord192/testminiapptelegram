@@ -189,21 +189,41 @@
 
 
 
-    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.umd.js"></script>    
+    <!-- Подключение TON Connect SDK -->
+    <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect.umd.js"></script>   
     <script>
         const uid = "QCwDpTnJclQCsiJ6cLqqhr97LWX4RklOAWr3eBBENsilJhM";
         const amount = 0.5;
 
-        const tonConnect = new TonConnect();
+        const manifest = {
+    short_name: "My App",
+    name: "My Application",
+    icons: [
+        {
+            src: "icon.png",
+            type: "image/png",
+            sizes: "512x512"
+        }
+    ],
+    start_url: ".",
+    display: "standalone",
+    background_color: "#000000",
+    theme_color: "#000000"
+};
 
-        document.getElementById('connect-wallet').addEventListener('click', async () => {
-        try {
-            await tonConnect.connectWallet();
-            console.log('Wallet connected');
-        } catch (error) {
-             console.error('Failed to connect wallet:', error);
-            }
+const tonConnect = new TonConnect();
+
+document.getElementById('connect-wallet').addEventListener('click', async () => {
+    try {
+        const wallet = await tonConnect.connect({
+            manifest: manifest, // Используем JSON объект манифеста напрямую
         });
+
+        console.log('Wallet connected:', wallet);
+    } catch (error) {
+        console.error('Failed to connect wallet:', error);
+    }
+});
 
     </script>
 </body>
